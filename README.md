@@ -1,1 +1,1 @@
-# Rock-Paper-Scissors
+Game of Rock-Paper-Scissors which is played in the console. 
