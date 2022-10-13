@@ -1,6 +1,13 @@
+const buttons = document.querySelectorAll('button')
+const output = document.querySelector('.output')
+const player = document.querySelector('.player')
+const computer = document.querySelector('.computer')
+const finalDiv = document.querySelector('.finalDiv')
 
-let playerScore = 0
-let computerScore = 0
+player.innerText = 0
+computer.innerText = 0
+ let playerScore = 0
+ let computerScore = 0
 
 // randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’.
 
@@ -12,32 +19,35 @@ return selection
 
 function playRound(playerSelection, computerSelection){
 if (playerSelection === computerSelection) {
-return 'It\'s a draw.'
+output.innerText = 'It\'s a draw.'
 }else if (playerSelection === 'rock' && computerSelection === 'scissors' ||
 playerSelection === 'paper' && computerSelection === 'rock' ||
 playerSelection === 'scissors' && computerSelection === 'paper'){
-playerScore ++
-return `You win, ${playerSelection} beats ${computerSelection}!`   
+output.innerText = `You win, ${playerSelection} beats ${computerSelection}!`   
+player.innerText = `${playerScore += 1}`
 }else {
-computerScore++
-return`You lose, ${computerSelection} beats ${playerSelection}!`   
+output.innerText = `You lose, ${computerSelection} beats ${playerSelection}!`   
+computer.innerText = `${computerScore += 1}`
     }
 }
 
-function game(){
-for (let i = 0; i < 5; i++){   
-const playerSelection = prompt('Choose between rock, paper or scissors').toLowerCase()
-console.log(playRound(playerSelection,getComputerChoice()))
-   }
-}
+ buttons.forEach(button => {
+     button.addEventListener('click', () => {
+        const computerSelection = getComputerChoice()
+        const playerSelection = `${button.className}`
+        playRound(playerSelection,computerSelection)
+        checkScore(playerScore, computerScore)
+     })
+ })
 
-game()
-
-function trackScore() {
-if (playerScore > computerScore) {
-console.log(`**ATTENTION** YOU WON! You scored ${playerScore} while this stupid machine scored ${computerScore}.`)
-}else if (playerScore < computerScore){
-console.log(`**ATTENTION** YOU LOST, TRY AGAIN! You scored ${playerScore} while computer beat you with the score of ${computerScore}.`)
-    }else {console.log(`**ATTENTION** After the 5 rounds you tied with the computer!`)}
-}
-trackScore()
+ function checkScore (playerScore,computerScore){
+    if (playerScore === 5){
+const declaration = document.createElement('h3')
+declaration.innerText = `Congratulations, you won ${playerScore} to ${computerScore}!`
+finalDiv.appendChild(declaration)
+    }else if (computerScore === 5){
+        const declaration = document.createElement('h3')
+        declaration.innerText = `Try again, you lost ${playerScore} to ${computerScore}!`
+        finalDiv.appendChild(declaration)
+    }
+ }
